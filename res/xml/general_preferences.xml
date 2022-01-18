@@ -139,13 +139,14 @@
             app:fragment="com.android.calendar.settings.QuickResponsePreferences"
             app:title="@string/quick_response_settings"
             app:summary="@string/quick_response_settings_summary" />
-     </PreferenceCategory>
+    </PreferenceCategory>
     <PreferenceCategory
         app:key="preferences_experimental_category"
         app:title="@string/preferences_experimental_category">
         <Preference
             app:key="preferences_copy_db"
-            app:title="@string/copy_db" />
+            app:title="@string/copy_db"
+            app:isPreferenceVisible="false" />
 
         <ListPreference
             app:key="preferences_reminders_responded"

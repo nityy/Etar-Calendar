@@ -16,6 +16,10 @@
 
 package com.android.calendar.widget;
 
+import static android.provider.CalendarContract.EXTRA_EVENT_ALL_DAY;
+import static android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME;
+import static android.provider.CalendarContract.EXTRA_EVENT_END_TIME;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -37,10 +41,6 @@ import com.android.calendar.EventInfoActivity;
 import com.android.calendar.Utils;
 
 import ws.xsoh.etar.R;
-
-import static android.provider.CalendarContract.EXTRA_EVENT_ALL_DAY;
-import static android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME;
-import static android.provider.CalendarContract.EXTRA_EVENT_END_TIME;
 
 /**
  * Simple widget to show next upcoming calendar event.
@@ -76,7 +76,7 @@ public class CalendarAppWidgetProvider extends AppWidgetProvider {
         intent.setClass(context, CalendarAppWidgetService.CalendarFactory.class);
         intent.setDataAndType(CalendarContract.CONTENT_URI, Utils.APPWIDGET_DATA_TYPE);
         return PendingIntent.getBroadcast(context, 0 /* no requestCode */, intent,
-                0 /* no flags */);
+                Utils.PI_FLAG_IMMUTABLE);
     }
 
     /**
@@ -90,7 +90,7 @@ public class CalendarAppWidgetProvider extends AppWidgetProvider {
                 Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         launchIntent.setClass(context, AllInOneActivity.class);
         return PendingIntent.getActivity(context, 0 /* no requestCode */, launchIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_UPDATE_CURRENT | Utils.PI_FLAG_IMMUTABLE);
     }
 
     /**
@@ -231,7 +231,7 @@ public class CalendarAppWidgetProvider extends AppWidgetProvider {
             launchCalendarIntent
                     .setData(Uri.parse("content://com.android.calendar/time/" + millis));
             final PendingIntent launchCalendarPendingIntent = PendingIntent.getActivity(
-                    context, 0 /* no requestCode */, launchCalendarIntent, 0 /* no flags */);
+                    context, 0 /* no requestCode */, launchCalendarIntent, Utils.PI_FLAG_IMMUTABLE);
             views.setOnClickPendingIntent(R.id.header, launchCalendarPendingIntent);
 
             // Each list item will call setOnClickExtra() to let the list know

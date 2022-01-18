@@ -16,22 +16,18 @@
 
 package com.android.calendar.alerts;
 
-import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Instances;
 import android.provider.CalendarContract.Reminders;
-import androidx.core.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
@@ -327,7 +323,7 @@ public class AlarmScheduler {
         Intent intent = new Intent(AlertReceiver.EVENT_REMINDER_APP_ACTION);
         intent.setClass(context, AlertReceiver.class);
         intent.putExtra(CalendarContract.CalendarAlerts.ALARM_TIME, alarmTime);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, Utils.PI_FLAG_IMMUTABLE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pi);
     }
 }
